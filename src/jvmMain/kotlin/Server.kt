@@ -2,6 +2,7 @@ import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
+import io.ktor.server.http.content.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.compression.*
 import io.ktor.server.plugins.contentnegotiation.*
@@ -31,6 +32,15 @@ fun main() {
             gzip()
         }
         routing {
+            get("/") {
+                call.respondText(
+                    this::class.java.classLoader.getResource("index.html")!!.readText(),
+                    ContentType.Text.Html
+                )
+            }
+            static("/") {
+                resources("")
+            }
             route(Item.path) {
                 get {
                     call.respond(items)

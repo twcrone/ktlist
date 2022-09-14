@@ -23,6 +23,12 @@ val App = FC<Props> {
         list.sortedByDescending(Item::priority).forEach { item ->
             li {
                 key = item.toString()
+                onClick = {
+                    scope.launch {
+                        deleteItem(item)
+                        list = getItemList()
+                    }
+                }
                 +"[${item.priority}] ${item.item}"
             }
         }

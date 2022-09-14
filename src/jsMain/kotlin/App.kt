@@ -27,4 +27,13 @@ val App = FC<Props> {
             }
         }
     }
+    inputComponent {
+        onSubmit = { input ->
+            val item = Item(input.replace("!", ""), input.count { it == '!' })
+            scope.launch {
+                addItem(item)
+                list = getItemList()
+            }
+        }
+    }
 }
